@@ -26,7 +26,7 @@ def intro():
     st.markdown(">...I beg you, become as I am, for I...")
     st.write("You would enter \"Chapter 4\". The program would write:")
     st.markdown(">The context for this verse is:"
-                "<p> afraid that my work for you may have been wasted. Friends, <span style=\"color:red\">"
+                "<p> afraid that my work for you may have been wasted. Friends, <span style=\"color:#6eb52f\">"
                 "I beg you, become as I am, for I</span> also have become as you are. You have done me </p>",
                 unsafe_allow_html = True)
     st.markdown("""---""")
@@ -175,7 +175,7 @@ class quizClass():
         c_phrase_beg = self.book.text[chapter][c_start:start].replace("\\", "")
         c_phrase_med = self.book.text[chapter][start:end].replace("\\", "")
         c_phrase_end = self.book.text[chapter][end:c_end].replace("\\", "")
-        st.markdown(f">The context for this verse is: <p> {c_phrase_beg}<span style=\"color:red\">{c_phrase_med}</span>{c_phrase_end} </p>", unsafe_allow_html = True)
+        st.markdown(f">The context for this verse is: <p> {c_phrase_beg}<span style=\"color:#6eb52f\">{c_phrase_med}</span>{c_phrase_end} </p>", unsafe_allow_html = True)
         #st.markdown(f">The context for this verse is: <p> {c_phrase} </p>", unsafe_allow_html = True)
 
 
