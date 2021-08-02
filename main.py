@@ -38,7 +38,7 @@ def get_params():
     number_of_questions = st.select_slider("How many questions do you want to be quizzed on?"
                                            " Your score will be shown afterward.",
                                            help="If you select Inf, then you'll get neverending questions, "
-                                                "and you won't be shown a score.", options=range_options, value=4,
+                                                "and you won't be shown a score.", options=range_options, value=10,
                                            key="num_questions")
     if number_of_questions == "Inf":
         number_of_questions = 10000

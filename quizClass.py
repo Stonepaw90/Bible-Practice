@@ -60,9 +60,14 @@ class quizClass():
             text = f"Chapter {entered}"
         else:
             text = f"Chapters {entered[0]}-{entered[-1]}"
-        to_print = f"Question {st.session_state['count']}: {'Correct' if bool else 'Wrong'}, " \
+        show_wrong = True
+        if show_wrong:
+            to_print = f"Question {st.session_state['count']}: {'Correct' if bool else 'Wrong'}, " \
                    f"this is from Chapter {str(correct_chapter)}, " \
                    f"{'and' if bool else 'but'} you entered {text}."
+        else:
+            to_print = f"Question {st.session_state['count']}: {'Correct' if bool else 'Wrong'}, " \
+                   f"this is from Chapter {str(correct_chapter)}."
         st.write(to_print)
 
     def return_context(self, chapter, start, end):
