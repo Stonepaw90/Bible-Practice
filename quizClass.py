@@ -83,11 +83,16 @@ class quizClass():
         random_chapter = random.randint(1, self.book.num_chapters) - 1
         phrase, start_num, end_num = self.generate_phrase(random_chapter)
         st.write(f"Your excerpt is:")
+        st.write(st.session_state)
+        st.write(f"Phrase is {phrase}")
         st.markdown(f">...{st.session_state['phrase'] if 'phrase' in st.session_state else phrase}...", unsafe_allow_html = True)
-        st.session_state['phrase'] = phrase
-        context_text = self.return_context(random_chapter, start_num, end_num)
-        if 'context' not in st.session_state:
-            st.session_state['context'] = context_text
+        if 'phrase' not in st.session_state:
+            st.session_state['phrase'] = phrase
+        #This line happens too often. Shouldn't happen after answer clicked.
+        if self.isContext:
+            context_text = self.return_context(random_chapter, start_num, end_num)
+            if 'context' not in st.session_state:
+                st.session_state['context'] = context_text
         self.store_answer()
         if 'answer' in st.session_state:
             initialize_or_iterate_session_state('count')
@@ -101,11 +106,11 @@ class quizClass():
             if self.isContext:
                 st.markdown(f"{st.session_state['context'] if 'context' in st.session_state else context_text}", unsafe_allow_html = True)
                 st.session_state['context'] = context_text
-            #st.session_state['phrase'] = phrase
+            st.session_state['phrase'] = phrase
             if st.session_state['count'] < self.n:
                 if st.button("Next Question"):
-                    del st.session_state['answer']
-                    del st.session_state['phrase']
+                    #del st.session_state['answer'] Unnessesary
+                    #del st.session_state['phrase'] Unnessesary
                     if self.isContext:
                         del st.session_state['context']
             else:
