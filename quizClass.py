@@ -1,7 +1,7 @@
 import random
 import streamlit as st
 
-random.seed(42)
+#random.seed(42)
 
 def initialize_or_iterate_session_state(variable_str):
     if variable_str not in st.session_state:
@@ -46,7 +46,8 @@ class quizClass():
         col = st.beta_columns(len(sections_list))
         for idx, option in enumerate(sections_list):
             if col[idx].button(self.get_button_text(option)):
-                st.session_state['answer'] = option
+                st.session_state['user_answer'] = option
+
 
     def check_answer(self, user_answer, correct_answer):
         if type(user_answer) is list and correct_answer in user_answer:
@@ -74,46 +75,60 @@ class quizClass():
         return f">The context for this verse is: <p> {c_phrase_beg}<span style=\"color:#6eb52f\">{c_phrase_med}</span>{c_phrase_end} </p>"
         #st.markdown(f">The context for this verse is: <p> {c_phrase} </p>", unsafe_allow_html = True)
 
-    def print_score(self):
-        st.write(f"You got {st.session_state['correct']}/{self.n} correct.")
+    def print_and_reset_score(self):
+        st.write(f"You got {st.session_state['correct'] if 'correct' in st.session_state else str(0)}/{self.n} correct.")
         st.session_state['correct'] = 0
         st.session_state['count'] = 0
 
+    def empty_space(self, n):
+        for _ in range(n):
+            st.write("#")
+
     def run_quiz_iters(self):
         random_chapter = random.randint(1, self.book.num_chapters) - 1
+        if 'last_chapter' not in st.session_state:
+            st.session_state['last_chapter'] = random_chapter
         phrase, start_num, end_num = self.generate_phrase(random_chapter)
         st.write(f"Your excerpt is:")
-        st.write(st.session_state)
-        st.write(f"Phrase is {phrase}")
-        st.markdown(f">...{st.session_state['phrase'] if 'phrase' in st.session_state else phrase}...", unsafe_allow_html = True)
+
+        #If first runthrough, prints phrase. Else, prints old phrase.
         if 'phrase' not in st.session_state:
             st.session_state['phrase'] = phrase
-        #This line happens too often. Shouldn't happen after answer clicked.
+        st.markdown(f">...{st.session_state['phrase']}...", unsafe_allow_html = True)
+
+
         if self.isContext:
             context_text = self.return_context(random_chapter, start_num, end_num)
+            #If first runthrough or next_question pressed, store context.
             if 'context' not in st.session_state:
                 st.session_state['context'] = context_text
         self.store_answer()
-        if 'answer' in st.session_state:
+
+        #Moves forward if answer pressed, else, doesn't move forward and waits.
+        if 'user_answer' in st.session_state:
             initialize_or_iterate_session_state('count')
-            entered_answer = st.session_state['answer']
-            del st.session_state['answer']
-            #del st.session_state['phrase']
-            is_correct_answer = self.check_answer(entered_answer, random_chapter + 1)
+            user_answer = st.session_state['user_answer']
+
+            #Deletes answer so we can wait upon an answer in the future.
+            del st.session_state['user_answer']
+
+            is_correct_answer = self.check_answer(user_answer, st.session_state['last_chapter'] + 1)
             if is_correct_answer:
                 initialize_or_iterate_session_state('correct')
-            self.show_result(is_correct_answer, entered_answer, random_chapter + 1)
+            self.show_result(is_correct_answer, user_answer, st.session_state['last_chapter'] + 1)
+            st.session_state['last_chapter'] = random_chapter
             if self.isContext:
-                st.markdown(f"{st.session_state['context'] if 'context' in st.session_state else context_text}", unsafe_allow_html = True)
+                st.markdown(f"{st.session_state['context']}", unsafe_allow_html = True)
                 st.session_state['context'] = context_text
             st.session_state['phrase'] = phrase
             if st.session_state['count'] < self.n:
                 if st.button("Next Question"):
-                    #del st.session_state['answer'] Unnessesary
-                    #del st.session_state['phrase'] Unnessesary
-                    if self.isContext:
-                        del st.session_state['context']
+                    pass
+                    #if self.isContext:
+                    #    del st.session_state['context']
             else:
-                self.print_score()
+                self.print_and_reset_score()
                 if st.button("Go again"):
                     pass
+        else:
+            self.empty_space(6)

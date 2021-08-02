@@ -8,6 +8,7 @@ from quizClass import quizClass
 import streamlit as st
 
 
+
 st.set_page_config(layout="centered",
                    page_title = f"{'Bible' if 'book_object' not in st.session_state else st.session_state['book_object'].title} Practice")
 
@@ -42,7 +43,7 @@ def get_params():
     if number_of_questions == "Inf":
         number_of_questions = 10000
     drill_range = st.slider("How many words long should the excerpt be?",
-                            value=(7, 15), min_value=1, max_value=30,
+                            value=(7, 15), min_value=1, max_value=40,
                             help="The program randomly chooses a length from your specified range of lengths. "
                                  "If you put both ends of the slider on one number, then the excerpt will "
                                  "always be that long.", key="drill_range")
@@ -56,7 +57,6 @@ def get_params():
 
 def main():
     intro()
-    st.write(st.session_state)
     col = st.beta_columns(5)
     book_titles = ['Galatians', 'Romans', 'John', '1 Corinthians', '2 Corinthians']
     all_book_texts = [galatians, romans, john, firstcor, secondcor]

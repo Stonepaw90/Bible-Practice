@@ -2,8 +2,8 @@ import re
 import streamlit as st
 
 
-def spaces_generator(book):
-    return [[m.start() for m in re.finditer(" ", i)] for i in book]
+def spaces_generator(book_text):
+    return [[m.start() for m in re.finditer(" ", chapter)] for chapter in book_text]
 
 class bookClass:
     def __init__(self, title, text):
