@@ -3,14 +3,6 @@ import streamlit as st
 
 #random.seed(42)
 
-def index_by_vector(vector):
-    #Takes vector [F, F, T, F] with only one true
-    #Returns 2
-    if True in vector:
-        return vector.index(True)
-    else:
-        return []
-
 def initialize_or_iterate_session_state(variable_str):
     if variable_str not in st.session_state:
         st.session_state[variable_str] = 1
