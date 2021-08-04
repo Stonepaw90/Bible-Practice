@@ -3,6 +3,14 @@ import streamlit as st
 
 #random.seed(42)
 
+def index_by_vector(vector):
+    #Takes vector [F, F, T, F] with only one true
+    #Returns 2
+    if True in vector:
+        return vector.index(True)
+    else:
+        return []
+
 def initialize_or_iterate_session_state(variable_str):
     if variable_str not in st.session_state:
         st.session_state[variable_str] = 1
@@ -95,7 +103,6 @@ class quizClass():
             st.session_state['last_chapter'] = random_chapter
         phrase, start_num, end_num = self.generate_phrase(random_chapter)
         st.write(f"Your excerpt is:")
-
         #If first runthrough, prints phrase. Else, prints old phrase.
         if 'phrase' not in st.session_state:
             st.session_state['phrase'] = phrase
@@ -107,13 +114,13 @@ class quizClass():
             #If first runthrough or next_question pressed, store context.
             if 'context' not in st.session_state:
                 st.session_state['context'] = context_text
-        self.store_answer()
 
-        #Moves forward if answer pressed, else, doesn't move forward and waits.
+        self.store_answer()
+ 
+
         if 'user_answer' in st.session_state:
             initialize_or_iterate_session_state('count')
             user_answer = st.session_state['user_answer']
-
             #Deletes answer so we can wait upon an answer in the future.
             del st.session_state['user_answer']
 
@@ -127,13 +134,11 @@ class quizClass():
                 st.session_state['context'] = context_text
             st.session_state['phrase'] = phrase
             if st.session_state['count'] < self.n:
-                if st.button("Next Question"):
+                if st.button("Next Question (or Press \"r\")"):
                     pass
-                    #if self.isContext:
-                    #    del st.session_state['context']
             else:
                 self.print_and_reset_score()
-                if st.button("Go again"):
+                if st.button("Go again (or Press \"r\")"):
                     pass
         else:
             self.empty_space(6)
