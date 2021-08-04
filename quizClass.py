@@ -126,11 +126,11 @@ class quizClass():
                 st.session_state['context'] = context_text
             st.session_state['phrase'] = phrase
             if st.session_state['count'] < self.n:
-                if st.button("Next Question (or Press \"r\")"):
+                if st.button("Next Question (or press \"r\")"):
                     pass
             else:
                 self.print_and_reset_score()
-                if st.button("Go again (or Press \"r\")"):
+                if st.button("Go again (or press \"r\")"):
                     pass
         else:
             self.empty_space(6)
