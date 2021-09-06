@@ -62,10 +62,10 @@ def clear_session_state():
 
 def main():
     image_container = intro()
-    if 'book_object' not in st.session_state:
+    #if 'book_object' not in st.session_state:
         #image_container.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
     #else:
-        image_container.image(f"images/bible_img.jpg")
+    image_container.image(f"images/bible_img.jpg")
     col = st.beta_columns(5)
     book_titles = ['Galatians', 'Romans', 'John', '1 Corinthians', '2 Corinthians']
     all_book_texts = [galatians.galatians, romans.romans, john.john, firstcor.firstcor, secondcor.secondcor]
@@ -79,7 +79,7 @@ def main():
             #book_title = title_of_book
             #st.error(book_title)
     if 'book_object' in st.session_state:
-        image_container.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
+        #image_container.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
         st.session_state['book_object'].phrase_lookup()
         params = get_params()
         if any(['count' in st.session_state, 'phrase' in st.session_state, st.button("Start")]):
