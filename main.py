@@ -65,7 +65,7 @@ def main():
     #if 'book_object' not in st.session_state:
         #image_container.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
     #else:
-    image_container.image(f"images/bible_img.jpg")
+    #image_container.image(f"images/bible_img.jpg")
     col = st.beta_columns(5)
     book_titles = ['Galatians', 'Romans', 'John', '1 Corinthians', '2 Corinthians']
     all_book_texts = [galatians.galatians, romans.romans, john.john, firstcor.firstcor, secondcor.secondcor]
