@@ -10,6 +10,7 @@ st.set_page_config(layout="centered",
 
 def intro():
     st.title("Exam Practice")
+    st.image(f"images/bible_img.jpg")
     im = st.empty()
     st.markdown("### Coded by [Abraham Holleran](https://github.com/Stonepaw90) :sunglasses:")
     st.write("This gives you a randomly chosen excerpt from your chosen book of the bible (NRSV), "
@@ -65,7 +66,7 @@ def main():
     #if 'book_object' not in st.session_state:
         #image_container.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
     #else:
-    image_container.image(f"images/bible_img.jpg")
+    #image_container.image(f"images/bible_img.jpg")
     col = st.beta_columns(5)
     book_titles = ['Galatians', 'Romans', 'John', '1 Corinthians', '2 Corinthians']
     all_book_texts = [galatians.galatians, romans.romans, john.john, firstcor.firstcor, secondcor.secondcor]
