@@ -10,7 +10,10 @@ st.set_page_config(layout="centered",
 
 def intro():
     st.title("Exam Practice")
-    st.image(f"images/bible_img.jpg")
+    if 'book_object' in st.session_state:
+        st.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
+    else:
+        st.image(f"images/bible_img.jpg")
     im = st.empty()
     st.markdown("### Coded by [Abraham Holleran](https://github.com/Stonepaw90) :sunglasses:")
     st.write("This gives you a randomly chosen excerpt from your chosen book of the bible (NRSV), "
