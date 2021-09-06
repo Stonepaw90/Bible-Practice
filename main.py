@@ -1,8 +1,4 @@
-from galatians import galatians
-from romans import romans
-from john import john
-from firstcor import firstcor
-from secondcor import secondcor
+from books import galatians, romans, john, firstcor, secondcor
 from bookClass import bookClass
 from quizClass import quizClass
 import streamlit as st
@@ -12,11 +8,9 @@ import streamlit as st
 st.set_page_config(layout="centered",
                    page_title = f"{'Bible' if 'book_object' not in st.session_state else st.session_state['book_object'].title} Practice")
 
-
-
 def intro():
     st.title("Exam Practice")
-    st.image("galatians_img.jpg")
+    im = st.empty()
     st.markdown("### Coded by [Abraham Holleran](https://github.com/Stonepaw90) :sunglasses:")
     st.write("This gives you a randomly chosen excerpt from your chosen book of the bible (NRSV), "
              "then you write what chapter, or chapter range,  the excerpt is from. "
@@ -30,7 +24,8 @@ def intro():
                 "I beg you, become as I am, for I</span> also have become as you are. You have done me </p>",
                 unsafe_allow_html = True)
     st.markdown("""---""")
-    st.subheader("Pick the book to practice.")
+    st.subheader("Pick a book to practice.")
+    return im
 
 def get_params():
     # st.write("Hover over the ? for more information.")
@@ -53,18 +48,38 @@ def get_params():
                                         help="A value of 0 removes the context feature entirely.")
     return [number_of_questions, drill_range, number_of_context_words]
 
+def del_ss(text):
+    if text in st.session_state:
+        del st.session_state[text]
+
+def clear_session_state():
+    del_ss('last_chapter')
+    del_ss('phrase')
+    del_ss('context')
+    del_ss('count')
+    del_ss('correct')
 
 
 def main():
-    intro()
+    image_container = intro()
+    if 'book_object' not in st.session_state:
+        #image_container.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
+    #else:
+        image_container.image(f"images/bible_img.jpg")
     col = st.beta_columns(5)
     book_titles = ['Galatians', 'Romans', 'John', '1 Corinthians', '2 Corinthians']
-    all_book_texts = [galatians, romans, john, firstcor, secondcor]
+    all_book_texts = [galatians.galatians, romans.romans, john.john, firstcor.firstcor, secondcor.secondcor]
     for indx, title_of_book in enumerate(book_titles):
         if col[indx].button(title_of_book):
-            book_object = bookClass(title_of_book, all_book_texts[indx])
-            st.session_state['book_object'] = book_object
+            #Upon switching books, clear some session_state data so that the computer "starts over"
+            if 'book_object' in st.session_state:
+                st.write("Clearing quiz score...")
+                clear_session_state()
+            st.session_state['book_object'] = bookClass(title_of_book, all_book_texts[indx])
+            #book_title = title_of_book
+            #st.error(book_title)
     if 'book_object' in st.session_state:
+        image_container.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
         st.session_state['book_object'].phrase_lookup()
         params = get_params()
         if any(['count' in st.session_state, 'phrase' in st.session_state, st.button("Start")]):
