@@ -14,7 +14,6 @@ def intro():
         st.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
     else:
         st.image(f"images/bible_img.jpg")
-    im = st.empty()
     st.markdown("### Coded by [Abraham Holleran](https://github.com/Stonepaw90) :sunglasses:")
     st.write("This gives you a randomly chosen excerpt from your chosen book of the bible (NRSV), "
              "then you write what chapter, or chapter range,  the excerpt is from. "
@@ -29,7 +28,6 @@ def intro():
                 unsafe_allow_html = True)
     st.markdown("""---""")
     st.subheader("Pick a book to practice.")
-    return im
 
 def get_params():
     # st.write("Hover over the ? for more information.")
@@ -65,11 +63,7 @@ def clear_session_state():
 
 
 def main():
-    image_container = intro()
-    #if 'book_object' not in st.session_state:
-        #image_container.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
-    #else:
-    #image_container.image(f"images/bible_img.jpg")
+    intro()
     col = st.beta_columns(5)
     book_titles = ['Galatians', 'Romans', 'John', '1 Corinthians', '2 Corinthians']
     all_book_texts = [galatians.galatians, romans.romans, john.john, firstcor.firstcor, secondcor.secondcor]
