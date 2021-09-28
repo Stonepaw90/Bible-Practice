@@ -7,8 +7,7 @@ import streamlit as st
 
 st.set_page_config(layout="centered",
                    page_title = f"{'Bible' if 'book_object' not in st.session_state else st.session_state['book_object'].title} Practice")
-st.experimental_memo()
-st.write("sup")
+
 def intro():
     st.title("Exam Practice")
     if 'book_object' in st.session_state:
