@@ -45,7 +45,7 @@ class quizClass():
 
     def store_answer(self, sections_list):
         # Prints out buttons, one for each chapter in the section, and stores which button is clicked.
-        col = st.beta_columns(len(sections_list))
+        col = st.columns(len(sections_list))
         for idx, chap_num in enumerate(sections_list):
             if col[idx].button(f"Chapter {chap_num}"):
                 st.session_state['user_answer'] = chap_num
