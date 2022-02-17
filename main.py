@@ -64,7 +64,7 @@ def clear_session_state():
 
 def main():
     intro()
-    col = st.beta_columns(5)
+    col = st.columns(5)
     book_titles = ['Galatians', 'Romans', 'John', '1 Corinthians', '2 Corinthians']
     all_book_texts = [galatians.galatians, romans.romans, john.john, firstcor.firstcor, secondcor.secondcor]
     for indx, title_of_book in enumerate(book_titles):
