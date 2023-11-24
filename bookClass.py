@@ -52,8 +52,6 @@ class bookClass:
         return list_of_sections[choose_true_from_bool(bool_vect_section)]
 
 
-
-
     def phrase_lookup(self):
         if 'text_to_find' in st.session_state:
             val = st.session_state['text_to_find']
@@ -67,8 +65,8 @@ class bookClass:
             st.warning("You included \"...\" in your phrase, consider trying again without ellipsis.")
         found = False
         for i in range(self.num_chapters):
-            if text_to_find in self.text[i]:
+            if text_to_find.lower() in self.text[i].lower():
                 st.write(f"The phrase '{text_to_find}' is in {self.title} Chapter {i + 1}.")
                 found = True
         if not found:
-            st.write(f"The phrase '{text_to_find}', as you wrote it, is not in {self.title} (NRSV).")
+            st.write(f"The phrase '{text_to_find}', is not in {self.title} (NRSV).")
