@@ -9,7 +9,7 @@ st.set_page_config(layout="centered",
                    page_title = f"{'Bible' if 'book_object' not in st.session_state else st.session_state['book_object'].title} Practice")
 
 def intro():
-    st.title("Exam Practice")
+    st.title("BCM 205/209/317 Exam Practice")
     if 'book_object' in st.session_state:
         st.image(f"images/{st.session_state['book_object'].title.lower()}_img.jpg")
     else:
